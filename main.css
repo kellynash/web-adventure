@@ -1,9 +1,10 @@
 .cell {
-	height: 100px;
-	width: 100px;
+	height: 110px;
+	width: 70px;
 	color: purple;
-	border-style: solid;
-	border-color: purple;
+	margin: 1px;
+	border-radius: 5px;
+	background-color: #888;
 	overflow: hidden;
 	align-content: center;
 }
