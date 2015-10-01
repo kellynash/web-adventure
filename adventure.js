@@ -1,63 +1,81 @@
-var adventure = {
-    yCoord: 0,
-    xCoord: 0,
-    endX: 8,
-    endY: 8,
-    killAbe: function(){
-    document.getElementById(adventure.endY.toString() + adventure.endX.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
-    },
-    target: function(){
-    document.getElementById(adventure.endY.toString() + adventure.endX.toString()).innerHTML = "<img src=\"retire.png\"></img>";
-    },
-    movAbe: function(){
-    document.getElementById(adventure.yCoord.toString() + adventure.xCoord.toString()).innerHTML = "<img src=\"small_abe.png\"></img>";
-    },
-    hideAbe: function(xChange, yChange){
-    document.getElementById((adventure.yCoord + yChange).toString() + (adventure.xCoord + xChange).toString()).innerHTML = "";
-    },
-    mov: function (xDel, yDel, x, y, bound) {
-    
-        if(adventure.xCoord === (adventure.endX + xDel) && adventure.yCoord === (adventure.endY + yDel)) {
-            adventure.xCoord += x;
-            adventure.yCoord += y;
-            adventure.hideAbe(xDel, yDel);  
-            adventure.killAbe();
-            dead.play();
-            alert("Whuuthaa!!??");
-        }
-        else if (adventure.yCoord === bound && yDel != 0) {
-            holdon.play();
-            alert("D'oh!!!");
-        }
-        else if (adventure.xCoord === bound && xDel != 0) {
-            coon.play();
-            alert("D'oh!!!");
-        }
-            else {
-            adventure.xCoord += x;
-            adventure.yCoord += y;
-            adventure.hideAbe(xDel, yDel);
-            adventure.movAbe();
-        };
-    },
-        movDown: function() {
-            adventure.mov(0, -1, 0, 1, 8);
-        }, 
-        movUp: function() {
-            adventure.mov(0, 1, 0, -1, 0);
-        }, 
-        movLeft: function() {
-            adventure.mov(1, 0, -1, 0, 0);
-        }, 
-        movRight: function() {
-            adventure.mov(-1, 0, 1, 0, 8);
-        },
-
-        reset: function() {
-            adventure.hideAbe(0,0);
-            adventure.xCoord = 0;
-            adventure.yCoord = 0;
-            adventure.movAbe();
-            adventure.target();
-        }
+function Adventure(yCoord, xCoord, endX, endY, bound) {
+    this.yCoord = yCoord;
+    this.xCoord = xCoord;
+    this.endX = endX;
+    this.endY = endY;
+    this.bound = bound;
 };
+
+var adventure = new Adventure (0, 0, 2, 2, 8);
+var newAbe = new Adventure (2, 3, 2, 2, 8);
+    
+Adventure.prototype.killAbe = function(){
+    document.getElementById(this.endY.toString() + 
+        this.endX.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
+};
+
+Adventure.prototype.target = function(){
+    document.getElementById(this.endY.toString() + 
+        this.endX.toString()).innerHTML = "<img src=\"retire.png\"></img>";
+};
+
+Adventure.prototype.movAbe = function(){
+    document.getElementById(this.yCoord.toString() + 
+        this.xCoord.toString()).innerHTML = "<img src=\"small_abe.png\"></img>";
+};
+
+Adventure.prototype.hideAbe = function(xChange, yChange){
+    document.getElementById((this.yCoord + yChange).toString() + 
+        (this.xCoord + xChange).toString()).innerHTML = "";
+};
+
+Adventure.prototype.mov = function(xDel, yDel, x, y){
+    if(this.xCoord + x === this.endX
+        && this.yCoord + y === this.endY) {
+        this.xCoord += x;
+    this.yCoord += y;
+    this.hideAbe(xDel, yDel);  
+    this.killAbe();
+    dead.play();
+    alert("Whuuthaa!!??");
+}
+else if (this.yCoord + y < 0 || this.yCoord + y === this.bound + 1) {
+    holdon.play();
+    alert("D'oh!!!");
+}
+else if (this.xCoord + x < 0 || this.xCoord + x === this.bound + 1) {
+    coon.play();
+    alert("D'oh!!!");
+}
+else {
+    this.xCoord += x;
+    this.yCoord += y;
+    this.hideAbe(xDel, yDel);
+    this.movAbe();
+};
+};
+
+Adventure.prototype.movDown = function(){
+    this.mov(0, -1, 0, 1);
+}; 
+
+Adventure.prototype.movUp = function() {
+    this.mov(0, 1, 0, -1);
+}; 
+
+Adventure.prototype.movLeft = function() {
+    this.mov(1, 0, -1, 0);
+}; 
+
+Adventure.prototype.movRight = function() {
+    this.mov(-1, 0, 1, 0);
+};
+
+Adventure.prototype.reset = function() {
+    this.hideAbe(0,0);
+    this.xCoord = 0;
+    this.yCoord = 0;
+    this.movAbe();
+    this.target();
+};
+

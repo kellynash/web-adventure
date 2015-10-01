@@ -2,9 +2,9 @@ var holdon = new Audio('holdon.wav');
 var coon = new Audio('racoon.wav');
 var dead = new Audio('dead.wav')
 
-
 adventure.movAbe();
 adventure.target();
+var newAbe = new Adventure (1, 1, 5, 5, 6);
 
 // function adventure.mov(xDel, yDel, x, y, bound) {
 	
