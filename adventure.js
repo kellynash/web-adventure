@@ -13,37 +13,33 @@ function Grid(numRow, numCol) {
     };
 }
 
-var adventure;
-var newAbe;
+var abe;
+var frank;
 
 function newGrid() {
-    adventure = new Adventure(0, 0, 3, 3, 3);
+    abe = new Adventure(0, 0, 3, 3, 3, "<img src=\"small_abe.png\"></img>");
+    frank = new Adventure(3, 3, 2, 2, 3, "<img src=\"frank.png\"></img>")
     //newAbe = new Adventure (2, 3, 2, 2, 3);
-    var newGrid = new Grid(adventure.size, adventure.size);
+    var newGrid = new Grid(abe.size, abe.size);
     newGrid.makeGrid();
-    adventure.movAbe();
-    adventure.target();
-
+    abe.movChar();
+    abe.target();
+    frank.movChar();
+    frank.target();
 };
 
 
 
 
-function Adventure(startY, startX, endY, endX, bound) {
+function Adventure(startY, startX, endY, endX, bound, avatar) {
     this.startY = startY;
     this.startX = startX;
     this.endX = endX;
     this.endY = endY;
     this.bound = bound;
     this.size = bound + 1;
-};
+    this.avatar = avatar;
 
-function Monster(startY, startX, endY, endX) {
-    this.startX= this.startX;
-    this.startY= this.startY;
-    this.endX = this.endX;
-    this.endY = this.endY;
-    this.avatar = "<img src=\"small_abe.png\"></img>";
 };
 
 
@@ -59,9 +55,9 @@ Adventure.prototype.target = function(){
         this.endX.toString()).innerHTML = "<img src=\"retire.png\"></img>";
 };
 
-Adventure.prototype.movAbe = function(){
+Adventure.prototype.movChar = function(){
     document.getElementById(this.startY.toString() + 
-        this.startX.toString()).innerHTML = this.Monster.avatar;
+        this.startX.toString()).innerHTML = this.avatar;
 };
 
 Adventure.prototype.hideAbe = function(xChange, yChange){
@@ -91,7 +87,7 @@ Adventure.prototype.mov = function(xDel, yDel, x, y){
         this.startX += x;
         this.startY += y;
         this.hideAbe(xDel, yDel);
-        this.movAbe();
+        this.movChar();
     };
 };
 
@@ -115,6 +111,6 @@ Adventure.prototype.reset = function() {
     this.hideAbe(0,0);
     this.startX = 0;
     this.startY = 0;
-    this.movAbe();
+    this.movChar();
     this.target();
 };
