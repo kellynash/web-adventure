@@ -1,17 +1,25 @@
+
+.gridStyle {
+	background-color: red;
+}
+
 .cell {
 	height: 110px;
 	width: 70px;
 	color: purple;
 	margin: 1px;
+	border: 1px;
 	border-radius: 5px;
 	background-color: #888;
 	overflow: hidden;
 	align-content: center;
 }
 .ttt-grid {
+	margin-top: 100px;
 	left: auto
 	right: auto;
 }
+
 #up {
 	position: relative;
 	top: 0;
