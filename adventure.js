@@ -17,8 +17,8 @@ var adventure;
 var newAbe;
 
 function newGrid() {
-    adventure = new Adventure (0, 0, 2, 2, 8);
-    newAbe = new Adventure (2, 3, 2, 2, 8);
+    adventure = new Adventure(0, 0, 3, 3, 3);
+    //newAbe = new Adventure (2, 3, 2, 2, 3);
     var newGrid = new Grid(adventure.size, adventure.size);
     newGrid.makeGrid();
     adventure.movAbe();
@@ -28,14 +28,25 @@ function newGrid() {
 
 
 
-function Adventure(yCoord, xCoord, endX, endY, bound) {
-    this.yCoord = yCoord;
-    this.xCoord = xCoord;
+
+function Adventure(startY, startX, endY, endX, bound) {
+    this.startY = startY;
+    this.startX = startX;
     this.endX = endX;
     this.endY = endY;
     this.bound = bound;
     this.size = bound + 1;
 };
+
+function Monster(startY, startX, endY, endX) {
+    this.startX= this.startX;
+    this.startY= this.startY;
+    this.endX = this.endX;
+    this.endY = this.endY;
+    this.avatar = "<img src=\"small_abe.png\"></img>";
+};
+
+
 
 
 Adventure.prototype.killAbe = function(){
@@ -49,36 +60,36 @@ Adventure.prototype.target = function(){
 };
 
 Adventure.prototype.movAbe = function(){
-    document.getElementById(this.yCoord.toString() + 
-        this.xCoord.toString()).innerHTML = "<img src=\"small_abe.png\"></img>";
+    document.getElementById(this.startY.toString() + 
+        this.startX.toString()).innerHTML = this.Monster.avatar;
 };
 
 Adventure.prototype.hideAbe = function(xChange, yChange){
-    document.getElementById((this.yCoord + yChange).toString() + 
-        (this.xCoord + xChange).toString()).innerHTML = "";
+    document.getElementById((this.startY + yChange).toString() + 
+        (this.startX + xChange).toString()).innerHTML = "";
 };
 
 Adventure.prototype.mov = function(xDel, yDel, x, y){
-    if(this.xCoord + x === this.endX
-        && this.yCoord + y === this.endY) {
-            this.xCoord += x;
-            this.yCoord += y;
+    if(this.startX + x === this.endX
+        && this.startY + y === this.endY) {
+            this.startX += x;
+            this.startY += y;
             this.hideAbe(xDel, yDel);  
             this.killAbe();
             dead.play();
             alert("Whuuthaa!!??");
     }
-    else if (this.yCoord + y < 0 || this.yCoord + y === this.bound + 1) {
+    else if (this.startY + y < 0 || this.yCoord + y === this.bound + 1) {
         holdon.play();
         alert("D'oh!!!");
     }
-    else if (this.xCoord + x < 0 || this.xCoord + x === this.bound + 1) {
+    else if (this.startX + x < 0 || this.startX + x === this.bound + 1) {
         coon.play();
         alert("D'oh!!!");
     }
     else {
-        this.xCoord += x;
-        this.yCoord += y;
+        this.startX += x;
+        this.startY += y;
         this.hideAbe(xDel, yDel);
         this.movAbe();
     };
@@ -102,8 +113,8 @@ Adventure.prototype.movRight = function() {
 
 Adventure.prototype.reset = function() {
     this.hideAbe(0,0);
-    this.xCoord = 0;
-    this.yCoord = 0;
+    this.startX = 0;
+    this.startY = 0;
     this.movAbe();
     this.target();
 };
