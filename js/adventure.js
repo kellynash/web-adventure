@@ -22,9 +22,9 @@ var adventure;
 
 function newGrid() {
     abe = new Player(0, 0, "abe", "<img src=\"images/small_abe.png\"></img>");
-    frank = new Obstacle("<img src=\"images/frank.png\"></img>");
+    frank = new Obstacle("Frankenstien", "<img src=\"images/frank.png\"></img>");
     retirementHome = new Goal("<img src=\"images/retire.png\"></img>")
-    adventure = new Adventure (abe, 5, 5, 5);
+    adventure = new Adventure (abe, 9, 9, 9);
     var newGrid = new Grid(adventure.size, adventure.size);
     newGrid.makeGrid();
     adventure.movChar();
@@ -46,9 +46,10 @@ function Goal(goalPic) {
     this.goalPic = goalPic;
 };
 
-function Obstacle (obPic) {
+function Obstacle (obName, obPic) {
     this.x = Math.floor((Math.random() * 5) + 1);
     this.y = Math.floor((Math.random() * 5) + 1);
+    this.obName = obName;
     this.obPic = obPic;
 };
 
@@ -94,15 +95,15 @@ Adventure.prototype.mov = function(xDel, yDel, x, y){
             this.hideAbe(xDel, yDel);  
             this.killAbe();
             dead.play();
-            alert("Whuuthaa!!??");
+            alert("You made it home!");
     }
     else if (this.start.y + y < 0 || this.start.y + y === this.bound + 1) {
         holdon.play();
-        alert("D'oh!!!");
+        alert("D'oh!!! You can't go there!");
     }
     else if (this.start.x + x < 0 || this.start.x + x === this.bound + 1) {
         coon.play();
-        alert("D'oh!!!");
+        alert("D'oh!!! You can't go there!");
 
     } else if(this.start.x + x === this.obstacle.x
         && this.start.y + y === this.obstacle.y) {
@@ -111,7 +112,7 @@ Adventure.prototype.mov = function(xDel, yDel, x, y){
             this.hideAbe(xDel, yDel);  
             this.reset();
             dead.play();
-            alert("Auuuughhh back to where you came from!")
+            alert("Auuuughhh " + this.obstacle.obName + " got you! Back to where you came from!")
     }
     else {
         this.start.x += x;
