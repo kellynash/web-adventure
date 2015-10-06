@@ -2,7 +2,6 @@ function Grid(numRow, numCol) {
     this.numRow = numRow;
     this.numCol = numCol;
     this.makeGrid = function () {
-        console.log("makeGrid");
         for (i = 0; i < this.numRow; i++) {
             document.write('<div class="row">');
             for (j = 0; j < this.numCol; j++) {
@@ -16,19 +15,22 @@ function Grid(numRow, numCol) {
 
 var abe;
 var frank;
+var retirementHome;
 var adventure;
+ 
 
 
 function newGrid() {
     abe = new Player(0, 0, "abe", "<img src=\"small_abe.png\"></img>");
-    frank = new Player(3, 3, "<img src=\"frank.png\"></img>");
-    adventure = new Adventure (abe, 10, 10, 10);
+    frank = new Obstacle(1, 2, "<img src=\"frank.png\"></img>");
+    retirementHome = new Goal(4, 2, "<img src=\"retire.png\"></img>")
+    adventure = new Adventure (abe, 5, 5, 5);
     var newGrid = new Grid(adventure.size, adventure.size);
     newGrid.makeGrid();
     adventure.movChar();
     adventure.target();
-    // frank.movChar();
-    // frank.target();
+    adventure.roadBlock();
+
 };
 
 function Player(x, y, name, avatar) {
@@ -38,32 +40,43 @@ function Player(x, y, name, avatar) {
     this.avatar = avatar;
 };
 
+function Goal(x, y, goalPic) {
+    this.x = x;
+    this.y = y;
+    this.goalPic = goalPic;
+};
 
-function Adventure(abe, endY, endX, bound) {
+function Obstacle (x, y, obPic) {
+    this.x = x;
+    this.y = y;
+    this.obPic = obPic;
+};
+
+function Adventure(abe, end, bound, obstacle) {
     this.start = abe;
-    this.endX = endX;
-    this.endY = endY;
+    this.end = retirementHome;
+    this.obstacle = frank;
     this.bound = bound;
     this.size = bound + 1;
 };
 
 
-
-
 Adventure.prototype.killAbe = function(){
-    document.getElementById(this.endY.toString() + 
-        this.endX.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
+    document.getElementById(this.end.y.toString() + 
+        this.end.x.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
 };
 
 Adventure.prototype.target = function(){
-    document.getElementById(this.endY.toString() + 
-        this.endX.toString()).innerHTML = "<img src=\"retire.png\"></img>";
+    document.getElementById(this.end.y.toString() + 
+        this.end.x.toString()).innerHTML = this.end.goalPic;
+};
+
+Adventure.prototype.roadBlock = function(){
+    document.getElementById(this.obstacle.y.toString() + 
+        this.obstacle.x.toString()).innerHTML = this.obstacle.obPic;
 };
 
 Adventure.prototype.movChar = function(){
-   
-console.log("movChar: " + this.start.y.toString() + 
-        this.start.x.toString())
     document.getElementById(this.start.y.toString() + 
         this.start.x.toString()).innerHTML = this.start.avatar;
 };
@@ -74,8 +87,8 @@ Adventure.prototype.hideAbe = function(xChange, yChange){
 };
 
 Adventure.prototype.mov = function(xDel, yDel, x, y){
-    if(this.start.x + x === this.endX
-        && this.start.y + y === this.endY) {
+    if(this.start.x + x === this.end.x
+        && this.start.y + y === this.end.y) {
             this.start.x += x;
             this.start.y += y;
             this.hideAbe(xDel, yDel);  
@@ -90,12 +103,22 @@ Adventure.prototype.mov = function(xDel, yDel, x, y){
     else if (this.start.x + x < 0 || this.start.x + x === this.bound + 1) {
         coon.play();
         alert("D'oh!!!");
+
+    } else if(this.start.x + x === this.obstacle.x
+        && this.start.y + y === this.obstacle.y) {
+            this.start.x += x;
+            this.start.y += y;
+            this.hideAbe(xDel, yDel);  
+            this.reset();
+            dead.play();
+            alert("Auuuughhh back to where you came from!")
     }
     else {
         this.start.x += x;
         this.start.y += y;
         this.hideAbe(xDel, yDel);
         this.movChar();
+
     };
 };
 
@@ -121,4 +144,5 @@ Adventure.prototype.reset = function() {
     this.start.y = 0;
     this.movChar();
     this.target();
+    this.roadBlock();
 };
