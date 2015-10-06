@@ -22,8 +22,8 @@ var adventure;
 
 function newGrid() {
     abe = new Player(0, 0, "abe", "<img src=\"small_abe.png\"></img>");
-    frank = new Obstacle(1, 2, "<img src=\"frank.png\"></img>");
-    retirementHome = new Goal(4, 2, "<img src=\"retire.png\"></img>")
+    frank = new Obstacle("<img src=\"frank.png\"></img>");
+    retirementHome = new Goal("<img src=\"retire.png\"></img>")
     adventure = new Adventure (abe, 5, 5, 5);
     var newGrid = new Grid(adventure.size, adventure.size);
     newGrid.makeGrid();
@@ -40,15 +40,15 @@ function Player(x, y, name, avatar) {
     this.avatar = avatar;
 };
 
-function Goal(x, y, goalPic) {
-    this.x = x;
-    this.y = y;
+function Goal(goalPic) {
+    this.x = Math.floor((Math.random() * 5) + 1);
+    this.y = Math.floor((Math.random() * 5) + 1);
     this.goalPic = goalPic;
 };
 
-function Obstacle (x, y, obPic) {
-    this.x = x;
-    this.y = y;
+function Obstacle (obPic) {
+    this.x = Math.floor((Math.random() * 5) + 1);
+    this.y = Math.floor((Math.random() * 5) + 1);
     this.obPic = obPic;
 };
 
