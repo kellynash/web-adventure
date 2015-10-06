@@ -21,9 +21,9 @@ var adventure;
 
 
 function newGrid() {
-    abe = new Player(0, 0, "abe", "<img src=\"small_abe.png\"></img>");
-    frank = new Obstacle("<img src=\"frank.png\"></img>");
-    retirementHome = new Goal("<img src=\"retire.png\"></img>")
+    abe = new Player(0, 0, "abe", "<img src=\"images/small_abe.png\"></img>");
+    frank = new Obstacle("<img src=\"images/frank.png\"></img>");
+    retirementHome = new Goal("<img src=\"images/retire.png\"></img>")
     adventure = new Adventure (abe, 5, 5, 5);
     var newGrid = new Grid(adventure.size, adventure.size);
     newGrid.makeGrid();
@@ -63,7 +63,7 @@ function Adventure(abe, end, bound, obstacle) {
 
 Adventure.prototype.killAbe = function(){
     document.getElementById(this.end.y.toString() + 
-        this.end.x.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
+        this.end.x.toString()).innerHTML = "<img src=\"images/dead.jpg\"></img>";
 };
 
 Adventure.prototype.target = function(){
